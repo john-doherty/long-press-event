@@ -55,9 +55,9 @@ To set a custom delay and listen for a `long-press`:
 
 This script works in IE9+, Chrome, Firefox, Safari as well as popular mobile browsers and Cordova _(Phone Gap)_ applications.
 
-## Try the example
+## Example
 
-This project includes everything needed to test, fork or tweak, including a node webserver. To run the web server, git clone the project and run:
+This project include a working example and everything needed to test, fork or tweak, including a node webserver. To run the web server, git clone the project and run:
 
 ```bash
 npm install
@@ -66,7 +66,7 @@ npm start
 
 Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
-## Unit Test
+## Unit Tests
 
 This project is unit tested using [JSDom](https://github.com/tmpvar/jsdom), [Nock](https://github.com/node-nock/nock) and [Jasmine-Node](https://github.com/mhevery/jasmine-node). Tests can be run by git cloning the project and executing:
 
