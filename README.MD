@@ -2,7 +2,7 @@
 
 [![Linked In](https://img.shields.io/badge/Linked-In-blue.svg)](https://www.linkedin.com/in/john-i-doherty) [![Twitter Follow](https://img.shields.io/twitter/follow/CambridgeMVP.svg?style=social&label=Twitter&style=plastic)](https://twitter.com/CambridgeMVP)
 
-A 1k script that allows applications to listen for a `long-press` event on any HTML element. Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay="3000"` attribute to an element.
+A 1k script that adds `long-press` event to any HTML element. Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay` attribute to an element.
 
 ## Usage
 
