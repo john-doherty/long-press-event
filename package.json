@@ -1,0 +1,141 @@
+{
+  "name": "long-press",
+  "version": "1.0.0",
+  "description": "A 1k script that allows applications to listen for a `long-press` event on any HTML element.",
+  "main": "dev-server.js",
+  "scripts": {
+    "start": "node server/dev-server.js",
+    "test": "jasmine-node tests --verbose --color --forceexit --junitreport || true",
+    "build": "node_modules/gulp/bin/gulp.js build",
+    "clean": "node_modules/gulp/bin/gulp.js clean"
+  },
+  "author": "John Doherty <contact@johndoherty.info> (www.johndoherty.info)",
+  "license": "MIT",
+  "devDependencies": {
+    "cors": "^2.8.3",
+    "del": "2.2.2",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "express": "4.15.3",
+    "gulp": "3.9.1",
+    "gulp-minify": "1.0.0",
+    "gulp-string-replace": "^0.4.0",
+    "jasmine-node": "1.14.5",
+    "jsdom": "10.1.0",
+    "nock": "9.0.13",
+    "run-sequence": "1.2.2"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "es6": true,
+      "jasmine": true,
+      "node": true,
+      "browser": true
+    },
+    "globals": {
+      "spyOn": true,
+      "ActiveXObject": true
+    },
+    "rules": {
+      "brace-style": [
+        "error",
+        "stroustrup"
+      ],
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "func-names": 0,
+      "indent": [
+        "error",
+        4,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "max-len": [
+        2,
+        180,
+        4,
+        {
+          "ignoreUrls": true,
+          "ignoreComments": false
+        }
+      ],
+      "new-cap": [
+        "error",
+        {
+          "capIsNewExceptions": [
+            "Router",
+            "ObjectId",
+            "DEBUG"
+          ],
+          "properties": false
+        }
+      ],
+      "no-underscore-dangle": 0,
+      "no-unused-vars": [
+        "warn"
+      ],
+      "no-use-before-define": [
+        "error",
+        {
+          "functions": false
+        }
+      ],
+      "no-var": [
+        "off"
+      ],
+      "one-var": [
+        "off"
+      ],
+      "vars-on-top": [
+        "off"
+      ],
+      "no-param-reassign": [
+        "off"
+      ],
+      "no-lone-blocks": [
+        "off"
+      ],
+      "padded-blocks": 0,
+      "prefer-template": [
+        "off"
+      ],
+      "prefer-arrow-callback": [
+        "off"
+      ],
+      "default-case": [
+        "off"
+      ],
+      "wrap-iife": [
+        2,
+        "any"
+      ],
+      "no-plusplus": [
+        "off"
+      ],
+      "require-jsdoc": [
+        "warn",
+        {
+          "require": {
+            "FunctionDeclaration": true,
+            "MethodDefinition": true,
+            "ClassDeclaration": true
+          }
+        }
+      ],
+      "object-shorthand": [
+        "error",
+        "never"
+      ],
+      "space-before-function-paren": "off",
+      "strict": "off",
+      "valid-jsdoc": [
+        "error"
+      ]
+    }
+  }
+}

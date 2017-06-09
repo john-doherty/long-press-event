@@ -1,0 +1,51 @@
+<!doctype>
+<html>
+    <head>
+        <title>long-press Test Page</title>
+        <script src="http://localhost:8080/src/long-press.js"></script>
+        <style>
+            .dock-item {
+                font-size: 14px;
+                font-family: arial;
+                display: inline-block;
+                margin: 10px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                cursor: pointer;
+                width: 70px;
+                height: 70px;
+                border-radius: 3px;
+                text-align: center;
+            }
+
+            @keyframes jiggle {
+                0% {
+                    transform: rotate(-1deg);
+                }
+                50% {
+                    transform: rotate(1deg);
+                }
+            }
+
+            .dock-item[data-editing="true"] {
+                animation: jiggle 0.2s infinite;
+                border: 1px solid #aaa;
+                box-shadow: 0 0 1px rgba(0,0,0,.85);
+            }
+        </style>
+        <script>
+
+            window.onload = function() {
+
+                document.addEventListener('long-press', function(e) {
+                    e.target.setAttribute('data-editing', 'true');
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div class="dock-item" data-long-press-delay="500">Press and hold me for .5s</div>
+        <div class="dock-item">Press and hold me for 1.5s</div>
+        <div class="dock-item" data-long-press-delay="5000">Press and hold me for 5s</div>
+    </body>
+</html>
