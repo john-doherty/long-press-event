@@ -2,7 +2,9 @@
 
 [![Shippable branch](https://img.shields.io/shippable/593aa7c6118f370700f9f244/master.svg)](https://app.shippable.com/projects/593aa7c6118f370700f9f244)  [![Linked In](https://img.shields.io/badge/Linked-In-blue.svg)](https://www.linkedin.com/in/john-i-doherty) [![Twitter Follow](https://img.shields.io/twitter/follow/CambridgeMVP.svg?style=social&label=Twitter&style=plastic)](https://twitter.com/CambridgeMVP)
 
-A 1k script that adds `long-press` event to any HTML element. Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay` attribute to an element.
+Adds a `long-press` event to the DOM using pure JavaScript, no JQuery or other dependencies. Works in IE9+, Chrome, Firefox, Safari as well as popular mobile browsers and Cordova _(Phone Gap)_ applications.
+
+Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay` attribute to an element.
 
 ## Usage
 
@@ -50,10 +52,6 @@ To set a custom delay and listen for a `long-press`:
     </body>
 </html>
 ```
-
-## Browser Support
-
-This script works in IE9+, Chrome, Firefox, Safari as well as popular mobile browsers and Cordova _(Phone Gap)_ applications.
 
 ## Example
 
