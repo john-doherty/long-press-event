@@ -18,6 +18,7 @@
     var mouseDown = isTouch ? 'touchstart' : 'mousedown';
     var mouseOut = isTouch ? 'touchcancel' : 'mouseout';
     var mouseUp = isTouch ? 'touchend' : 'mouseup';
+    var mouseMove = isTouch ? 'touchmove' : 'mousemove';
 
     // patch CustomEvent to allow constructor creation (IE/Chrome) - resolved once initCustomEvent no longer exists
     if ('initCustomEvent' in document.createEvent('CustomEvent')) {
@@ -53,6 +54,11 @@
 
     // clear the timeout if the user leaves the element
     document.addEventListener(mouseOut, function(e) {
+        clearTimeout(timer);
+    });
+
+    // clear if the mouse moves
+    document.addEventListener(mouseMove, function(e) {
         clearTimeout(timer);
     });
 
