@@ -6,6 +6,8 @@ Adds a `long-press` event to the DOM using pure JavaScript _(no JQuery or other 
 
 Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay` attribute to an element.
 
+Try the [demo](https://jsfiddle.net/5xrtx69z/3/)
+
 ## Usage
 
 Add the [long-press.min.js](dist/long-press.min.js) file to your page and then listen for the event.
