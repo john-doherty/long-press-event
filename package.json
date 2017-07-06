@@ -1,6 +1,6 @@
 {
   "name": "long-press",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A 1k script that allows applications to listen for a `long-press` event on any HTML element.",
   "main": "dev-server.js",
   "scripts": {
