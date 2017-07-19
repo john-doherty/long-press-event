@@ -55,29 +55,33 @@ To set a custom delay and listen for a `long-press`:
 </html>
 ```
 
-## Example
+## Contribute
 
-This project include a working example and everything needed to test, fork or tweak, including a node webserver. To run the web server, git clone the project and run:
+### Local development
+
+The project includes everything needed to continue development, including a node webserver. If you'd like to help out, run the following to get started:
 
 ```bash
+git clone https://github.com/john-doherty/long-press
+cd long-press
 npm install
 npm start
 ```
 
 Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
-## Unit Tests
+### Testing
 
-This project is unit tested using [JSDom](https://github.com/tmpvar/jsdom), [Nock](https://github.com/node-nock/nock) and [Jasmine-Node](https://github.com/mhevery/jasmine-node). Tests can be run by git cloning the project and executing:
+The project includes Unit Test. To run the tests execute the following from within the long-press folder:
 
 ```bash
 npm install
 npm test
 ```
 
-## Build
+### Generate .min files
 
-To create a new version of the minified [long-press.min.js](dist/long-press.min.js) from source, run the following command:
+To create a new version of the minified [long-press.min.js](dist/long-press.min.js) file from source, run the following command:
 
 ```bash
 npm run build
