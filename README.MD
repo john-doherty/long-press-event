@@ -2,7 +2,7 @@
 
 [![Shippable branch](https://img.shields.io/shippable/593aa7c6118f370700f9f244/master.svg)](https://app.shippable.com/projects/593aa7c6118f370700f9f244)  [![Linked In](https://img.shields.io/badge/Linked-In-blue.svg)](https://www.linkedin.com/in/john-i-doherty) [![Twitter Follow](https://img.shields.io/twitter/follow/MrJohnDoherty.svg?style=social&label=Twitter&style=plastic)](https://twitter.com/MrJohnDoherty)
 
-A **1.2k** script that adds a `long-press` event to the DOM using pure JavaScript. Works in IE9+, Chrome, Firefox, Safari as well as popular mobile browsers including Cordova _(Phone Gap)_ applications.
+A **0.5k** script that adds a `long-press` event to the DOM using [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) and pure JavaScript. Works in IE9+, Chrome, Firefox, Safari as well as popular mobile browsers including Cordova _(Phone Gap)_ applications.
 
 Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay` attribute to an element.
 
@@ -55,11 +55,19 @@ To set a custom delay and listen for a `long-press`:
 </html>
 ```
 
-## Contribute
+## Contributing
 
-### Local development
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request
 
-The project includes everything needed to continue development, including a node webserver. If you'd like to help out, run the following to get started:
+### Development
+
+The project includes everything needed to tweak, including a node webserver. Run the following, then visit [http://localhost:8080](http://localhost:8080) in your browser.
+
+_You can test on a desktop using [Device Mode](https://developers.google.com/web/tools/chrome-devtools/device-mode/) in Google Chrome._
 
 ```bash
 git clone https://github.com/john-doherty/long-press
@@ -68,32 +76,21 @@ npm install
 npm start
 ```
 
-Then visit [http://localhost:8080](http://localhost:8080) in your browser.
+### Update .min files
 
-### Testing
-
-The project includes Unit Test. To run the tests execute the following from within the long-press folder:
-
-```bash
-npm install
-npm test
-```
-
-### Generate .min files
-
-To create a new version of the minified [long-press.min.js](dist/long-press.min.js) file from source, run the following command:
+To create a new version of the minified [long-press.min.js](dist/long-press.min.js) file from source, tweak the version number in `package.json` and run the following:
 
 ```bash
 npm run build
 ```
 
-## Reporting Bugs
+## Star the repo
 
-If you find a bug, please take a moment to create a [jsfiddle](https://jsfiddle.net) to replicate the issue and include it to your post.
+If you find this useful, please star the repo. It helps me priorities which open source projects issues I should resolve first.
 
-## Pull Requests
+## History
 
-Before submitting a pull request please ensure your work is covered by a unit test _(if required)_, and follows the current ESLint coding style defined in the [package.json](package.json) file.
+For change-log, check [releases](https://github.com/john-doherty/long-press/releases).
 
 ## License
 
