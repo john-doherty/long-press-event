@@ -1,7 +1,7 @@
 {
   "name": "long-press",
   "version": "1.0.1",
-  "description": "A 1k script that allows applications to listen for a `long-press` event on any HTML element.",
+  "description": "A 0.5k script that adds a long-press event to the DOM",
   "main": "dev-server.js",
   "scripts": {
     "start": "node server/dev-server.js",
@@ -9,6 +9,18 @@
     "build": "node_modules/gulp/bin/gulp.js build",
     "clean": "node_modules/gulp/bin/gulp.js clean"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/john-doherty/long-press.git"
+  },
+  "bugs": {
+    "url": "https://github.com/john-doherty/long-press/issues"
+  },
+  "keywords": [
+    "long-press",
+    "press",
+    "touch"
+  ],
   "author": "John Doherty <contact@johndoherty.info> (www.johndoherty.info)",
   "license": "MIT",
   "devDependencies": {
