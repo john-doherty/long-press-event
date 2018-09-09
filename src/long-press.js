@@ -19,6 +19,7 @@
     var mouseOut = isTouch ? 'touchcancel' : 'mouseout';
     var mouseUp = isTouch ? 'touchend' : 'mouseup';
     var mouseMove = isTouch ? 'touchmove' : 'mousemove';
+	var mouseWheel = 'wheel';
 
     // patch CustomEvent to allow constructor creation (IE/Chrome) - resolved once initCustomEvent no longer exists
     if ('initCustomEvent' in document.createEvent('CustomEvent')) {
@@ -61,6 +62,12 @@
     document.addEventListener(mouseMove, function(e) {
         clearTimeout(timer);
     });
+	
+	
+	// clear if the Wheel event is fired in the element
+	document.addEventListener(mouseWheel, function(e){ 
+		clearTimeout(timer);
+	});
 
     /**
      * Fires the 'long-press' event on element
