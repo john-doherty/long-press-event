@@ -19,11 +19,11 @@
     var mouseOut = isTouch ? 'touchcancel' : 'mouseout';
     var mouseUp = isTouch ? 'touchend' : 'mouseup';
     var mouseMove = isTouch ? 'touchmove' : 'mousemove';
-    
-    //All possible Wheel / Scroll events.
+
+    // wheel/scroll events
     var mouseWheel = 'mousewheel';
     var wheel = 'wheel';
-    var scrollEvent = 'scroll';	
+    var scrollEvent = 'scroll';
 
     // patch CustomEvent to allow constructor creation (IE/Chrome) - resolved once initCustomEvent no longer exists
     if ('initCustomEvent' in document.createEvent('CustomEvent')) {
@@ -66,23 +66,22 @@
     document.addEventListener(mouseMove, function(e) {
         clearTimeout(timer);
     });
-	
-	
+
     // clear if the Wheel event is fired in the element
     document.addEventListener(mouseWheel, function(e){ 
-    	clearTimeout(timer);
+        clearTimeout(timer);
     });
-	
+
     // clear if the Scroll event is fired in the element
     document.addEventListener(wheel, function(e){ 
-    	clearTimeout(timer);
+        clearTimeout(timer);
     });
 
     // clear if the Scroll event is fired in the element
     document.addEventListener(scrollEvent, function(e){ 
-    	clearTimeout(timer);
+        clearTimeout(timer);
     });
-	
+
     /**
      * Fires the 'long-press' event on element
      * @returns {void}
