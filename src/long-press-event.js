@@ -1,7 +1,7 @@
 /*!
- * long-press.js
- * Pure JavaScript long-press event
- * https://github.com/john-doherty/long-press
+ * long-press-event.js
+ * Pure JavaScript long-press-event
+ * https://github.com/john-doherty/long-press-event
  * @author John Doherty <www.johndoherty.info>
  * @license MIT
  */
@@ -93,7 +93,7 @@
 
         clearTimeout(timer);
 
-        if (console && console.log) console.log('long-press fired on ' + this.outerHTML);
+        if (console && console.log) console.log('long-press event fired on ' + this.outerHTML);
     }
 
 }(this, document));

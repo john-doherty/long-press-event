@@ -16,8 +16,8 @@ describe('long-press', function () {
     beforeEach(function (done) {
 
         nock('http://localhost:8080')
-            .get('/src/long-press.js')
-            .replyWithFile(200, path.resolve('./src/long-press.js'));
+            .get('/src/long-press-event.js')
+            .replyWithFile(200, path.resolve('./src/long-press-event.js'));
 
         var virtualConsole = new jsdom.VirtualConsole();
 

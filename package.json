@@ -1,7 +1,7 @@
 {
-  "name": "long-press",
-  "version": "1.0.2",
-  "description": "A 0.5k script that adds a long-press event to the DOM",
+  "name": "long-press-event",
+  "version": "1.0.3",
+  "description": "A 0.5k script that adds a long-press event to the DOM using pure JS",
   "main": "dev-server.js",
   "scripts": {
     "start": "node server/dev-server.js",
@@ -11,15 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/john-doherty/long-press.git"
+    "url": "git+https://github.com/john-doherty/long-press-event.git"
   },
   "bugs": {
-    "url": "https://github.com/john-doherty/long-press/issues"
+    "url": "https://github.com/john-doherty/long-press-event/issues"
   },
   "keywords": [
     "long-press",
+    "long-press-event",
     "press",
-    "touch"
+    "touch",
+    "event"
   ],
   "author": "John Doherty <contact@johndoherty.info> (www.johndoherty.info)",
   "license": "MIT",

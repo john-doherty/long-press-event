@@ -1,4 +1,4 @@
-# long-press
+# long-press-event
 
 [![Shippable branch](https://img.shields.io/shippable/593aa7c6118f370700f9f244/master.svg)](https://app.shippable.com/projects/593aa7c6118f370700f9f244)  [![Linked In](https://img.shields.io/badge/Linked-In-blue.svg)](https://www.linkedin.com/in/john-i-doherty) [![Twitter Follow](https://img.shields.io/twitter/follow/MrJohnDoherty.svg?style=social&label=Twitter&style=plastic)](https://twitter.com/MrJohnDoherty)
 
@@ -8,9 +8,11 @@ Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay
 
 Try the [demo](https://jsfiddle.net/5xrtx69z/3/)
 
+**NOTE:** Had to renamed this from `long-press` to `long-press-event` to allow it to be published on npm as long-press was taken.
+
 ## Usage
 
-Add the [long-press.min.js](dist/long-press.min.js) file to your page and then listen for the event.
+Add the [long-press-event.min.js](dist/long-press-event.min.js) file to your page and then listen for the event.
 
 To listen for a `long-press` on any HTML element:
 
@@ -42,7 +44,7 @@ To set a custom delay and listen for a `long-press`:
 ```html
 <html>
     <head>
-        <script src="long-press.js"></script>
+        <script src="long-press-event.js"></script>
         <script>
             document.addEventListener('long-press', function(e) {
                 console.log(e.target);
@@ -78,7 +80,7 @@ npm start
 
 ### Update .min files
 
-To create a new version of the minified [long-press.min.js](dist/long-press.min.js) file from source, tweak the version number in `package.json` and run the following:
+To create a new version of the minified [long-press.min.js](dist/long-press-event.min.js) file from source, tweak the version number in `package.json` and run the following:
 
 ```bash
 npm run build
@@ -90,7 +92,7 @@ If you find this useful, please star the repo. It helps me priorities which open
 
 ## History
 
-For change-log, check [releases](https://github.com/john-doherty/long-press/releases).
+For change-log, check [releases](https://github.com/john-doherty/long-press-event/releases).
 
 ## License
 
