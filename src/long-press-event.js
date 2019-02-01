@@ -12,7 +12,7 @@
     var timer = null;
 
     // check if we're using a touch screen
-    var isTouch = (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+    var isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
 
     // switch to touch events if using a touch screen
     var mouseDown = isTouch ? 'touchstart' : 'mousedown';
