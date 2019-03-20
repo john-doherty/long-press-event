@@ -96,4 +96,4 @@
         if (console && console.log) console.log('long-press event fired on ' + this.outerHTML);
     }
 
-}(this, document));
+}(window, document));
