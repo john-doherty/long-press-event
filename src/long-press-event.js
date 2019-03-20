@@ -26,7 +26,7 @@
     var scrollEvent = 'scroll';
 
     // patch CustomEvent to allow constructor creation (IE/Chrome)
-    if (typeof window.CustomEvent !== "function" ) {
+    if (typeof window.CustomEvent !== 'function') {
 
         window.CustomEvent = function(event, params) {
 
@@ -53,32 +53,32 @@
     });
 
     // clear the timeout if the user releases the mouse/touch
-    document.addEventListener(mouseUp, function(e) {
+    document.addEventListener(mouseUp, function() {
         clearTimeout(timer);
     });
 
     // clear the timeout if the user leaves the element
-    document.addEventListener(mouseOut, function(e) {
+    document.addEventListener(mouseOut, function() {
         clearTimeout(timer);
     });
 
     // clear if the mouse moves
-    document.addEventListener(mouseMove, function(e) {
+    document.addEventListener(mouseMove, function() {
         clearTimeout(timer);
     });
 
     // clear if the Wheel event is fired in the element
-    document.addEventListener(mouseWheel, function(e){ 
+    document.addEventListener(mouseWheel, function() {
         clearTimeout(timer);
     });
 
     // clear if the Scroll event is fired in the element
-    document.addEventListener(wheel, function(e){ 
+    document.addEventListener(wheel, function() {
         clearTimeout(timer);
     });
 
     // clear if the Scroll event is fired in the element
-    document.addEventListener(scrollEvent, function(e){ 
+    document.addEventListener(scrollEvent, function() {
         clearTimeout(timer);
     });
 
