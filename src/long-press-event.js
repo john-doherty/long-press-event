@@ -12,18 +12,13 @@
     var timer = null;
 
     // check if we're using a touch screen
-    var isTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+    var isTouch = (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
 
     // switch to touch events if using a touch screen
     var mouseDown = isTouch ? 'touchstart' : 'mousedown';
     var mouseOut = isTouch ? 'touchcancel' : 'mouseout';
     var mouseUp = isTouch ? 'touchend' : 'mouseup';
     var mouseMove = isTouch ? 'touchmove' : 'mousemove';
-
-    // wheel/scroll events
-    var mouseWheel = 'mousewheel';
-    var wheel = 'wheel';
-    var scrollEvent = 'scroll';
 
     // patch CustomEvent to allow constructor creation (IE/Chrome)
     if (typeof window.CustomEvent !== 'function') {
@@ -40,8 +35,37 @@
         window.CustomEvent.prototype = window.Event.prototype;
     }
 
-    // listen to mousedown event on any child element of the body
-    document.addEventListener(mouseDown, function(e) {
+    /**
+     * Fires the 'long-press' event on element
+     * @returns {void}
+     */
+    function fireLongPressEvent() {
+
+        clearLongPressTimer();
+
+        // fire the long-press event
+        var suppressClickEvent = this.dispatchEvent(new CustomEvent('long-press', { bubbles: true, cancelable: true }));
+
+        if (suppressClickEvent) {
+
+            // temporarily intercept and clear the next click
+            document.addEventListener(mouseUp, function clearMouseUp(e) {
+                document.removeEventListener(mouseUp, clearMouseUp, true);
+                cancelEvent(e);
+            }, true);
+        }
+
+        log('long-press event fired on ' + this.outerHTML);
+    }
+
+    /**
+     * method responsible for starting the long press timer
+     * @param {event} e - event object
+     * @returns {void}
+     */
+    function startLongPressTimer(e) {
+
+        clearLongPressTimer(e);
 
         var el = e.target;
 
@@ -50,50 +74,57 @@
 
         // start the timer
         timer = setTimeout(fireLongPressEvent.bind(el), longPressDelayInMs);
-    });
-
-    // clear the timeout if the user releases the mouse/touch
-    document.addEventListener(mouseUp, function() {
-        clearTimeout(timer);
-    });
-
-    // clear the timeout if the user leaves the element
-    document.addEventListener(mouseOut, function() {
-        clearTimeout(timer);
-    });
-
-    // clear if the mouse moves
-    document.addEventListener(mouseMove, function() {
-        clearTimeout(timer);
-    });
-
-    // clear if the Wheel event is fired in the element
-    document.addEventListener(mouseWheel, function() {
-        clearTimeout(timer);
-    });
-
-    // clear if the Scroll event is fired in the element
-    document.addEventListener(wheel, function() {
-        clearTimeout(timer);
-    });
-
-    // clear if the Scroll event is fired in the element
-    document.addEventListener(scrollEvent, function() {
-        clearTimeout(timer);
-    });
+    }
 
     /**
-     * Fires the 'long-press' event on element
+     * method responsible for clearing a pending long press timer
+     * @param {event} e - event object
      * @returns {void}
      */
-    function fireLongPressEvent() {
-
-        // fire the long-press event
-        this.dispatchEvent(new CustomEvent('long-press', { bubbles: true, cancelable: true }));
-
+    function clearLongPressTimer(e) {
         clearTimeout(timer);
-
-        if (console && console.log) console.log('long-press event fired on ' + this.outerHTML);
+        timer = null;
+        if (e) log(e.type);
     }
+
+    /**
+     * Writes values to the console if available
+     * @param {string} value - value to log
+     * @returns {void}
+     */
+    function log(value) {
+        if (console && console.log) {
+            console.log('[long-press-event.js]', value);
+        }
+    }
+
+    /**
+    * Cancels the current event
+    * @param {object} e - browser event object
+    * @returns {void}
+    */
+    function cancelEvent(e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    // hook events that clear a pending long press event
+    document.addEventListener(mouseOut, clearLongPressTimer, true);
+    document.addEventListener(mouseUp, clearLongPressTimer, true);
+    document.addEventListener(mouseMove, clearLongPressTimer, true);
+    document.addEventListener('wheel', clearLongPressTimer, true);
+    document.addEventListener('scroll', clearLongPressTimer, true);
+
+    // cancel context for touch display
+    if (mouseDown.indexOf('touch') === 0) {
+        document.addEventListener('contextmenu', cancelEvent, true);
+    }
+    else {
+        document.addEventListener('contextmenu', clearLongPressTimer, true);
+    }
+
+    // hook events that can trigger a long press event
+    document.addEventListener(mouseDown, startLongPressTimer, true); // <- start
 
 }(window, document));
