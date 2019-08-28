@@ -93,9 +93,9 @@
      * @returns {void}
      */
     function log(value) {
-        if (console && console.log) {
-            console.log('[long-press-event.js]', value);
-        }
+        // if (console && console.log) {
+        //     console.log('[long-press-event.js]', value);
+        // }
     }
 
     /**
