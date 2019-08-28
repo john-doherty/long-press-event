@@ -37,14 +37,18 @@
 
     /**
      * Fires the 'long-press' event on element
+     * @param {MouseEvent|TouchEvent} originalEvent The original event being fired
      * @returns {void}
      */
-    function fireLongPressEvent() {
+    function fireLongPressEvent(originalEvent) {
 
         clearLongPressTimer();
 
+        var clientX = isTouch ? originalEvent.touches[0].clientX : originalEvent.clientX,
+            clientY = isTouch ? originalEvent.touches[0].clientY : originalEvent.clientY;
+
         // fire the long-press event
-        var suppressClickEvent = this.dispatchEvent(new CustomEvent('long-press', { bubbles: true, cancelable: true }));
+        var suppressClickEvent = this.dispatchEvent(new CustomEvent('long-press', { bubbles: true, cancelable: true, detail: { clientX: clientX, clientY: clientY } }));
 
         if (suppressClickEvent) {
 
@@ -73,7 +77,7 @@
         var longPressDelayInMs = parseInt(el.getAttribute('data-long-press-delay') || '1500', 10);
 
         // start the timer
-        timer = setTimeout(fireLongPressEvent.bind(el), longPressDelayInMs);
+        timer = setTimeout(fireLongPressEvent.bind(el, e), longPressDelayInMs);
     }
 
     /**
