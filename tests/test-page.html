@@ -18,10 +18,8 @@
                         e.ctrlKey = false;
                         e.shiftKey = false;
                         e.metaKey = false;
-                        e.initUIEvent('touchend', true, true);
-
+                        e.initUIEvent(eventName, true, true, window, 0);
                         el.dispatchEvent(e);
-                        console.log('touch event fired');
                     }
                     else {
                         e = document.createEvent('HTMLEvents');
