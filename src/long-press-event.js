@@ -162,14 +162,6 @@
     document.addEventListener('wheel', clearLongPressTimer, true);
     document.addEventListener('scroll', clearLongPressTimer, true);
 
-    // cancel context for touch display
-    if (mouseDown.indexOf('touch') === 0) {
-        document.addEventListener('contextmenu', cancelEvent, true);
-    }
-    else {
-        document.addEventListener('contextmenu', clearLongPressTimer, true);
-    }
-
     // hook events that can trigger a long press event
     document.addEventListener(mouseDown, startLongPressTimer, true); // <- start
 
