@@ -35,6 +35,66 @@
         window.CustomEvent.prototype = window.Event.prototype;
     }
 
+    // requestAnimationFrame() shim by Paul Irish
+    window.requestAnimFrame = (function() {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame || function(callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
+
+    /**
+     * Behaves the same as setTimeout except uses requestAnimationFrame() where possible for better performance
+     * @param {function} fn The callback function
+     * @param {int} delay The delay in milliseconds
+     * @returns {object} handle to the timeout object
+     */
+    function requestTimeout(fn, delay) {
+
+        if (!window.requestAnimationFrame && !window.webkitRequestAnimationFrame &&
+            !(window.mozRequestAnimationFrame && window.mozCancelRequestAnimationFrame) && // Firefox 5 ships without cancel support
+            !window.oRequestAnimationFrame && !window.msRequestAnimationFrame) return window.setTimeout(fn, delay);
+
+        var start = new Date().getTime();
+        var handle = {};
+
+        var loop = function() {
+            var current = new Date().getTime();
+            var delta = current - start;
+
+            if (delta >= delay) {
+                fn.call();
+            }
+            else {
+                handle.value = requestAnimFrame(loop);
+            }
+        };
+
+        handle.value = requestAnimFrame(loop);
+
+        return handle;
+    }
+
+    /**
+     * Behaves the same as clearTimeout except uses cancelRequestAnimationFrame() where possible for better performance
+     * @param {object} handle The callback function
+     * @returns {void}
+     */
+    function clearRequestTimeout(handle) {
+        if (handle) {
+            window.cancelAnimationFrame ? window.cancelAnimationFrame(handle.value) :
+            window.webkitCancelAnimationFrame ? window.webkitCancelAnimationFrame(handle.value) :
+            window.webkitCancelRequestAnimationFrame ? window.webkitCancelRequestAnimationFrame(handle.value) : /* Support for legacy API */
+            window.mozCancelRequestAnimationFrame ? window.mozCancelRequestAnimationFrame(handle.value) :
+            window.oCancelRequestAnimationFrame	? window.oCancelRequestAnimationFrame(handle.value) :
+            window.msCancelRequestAnimationFrame ? window.msCancelRequestAnimationFrame(handle.value) :
+            clearTimeout(handle);
+        }
+    }
+
     /**
      * Fires the 'long-press' event on element
      * @param {MouseEvent|TouchEvent} originalEvent The original event being fired
@@ -58,8 +118,6 @@
                 cancelEvent(e);
             }, true);
         }
-
-        log('long-press event fired on ' + this.outerHTML);
     }
 
     /**
@@ -77,7 +135,7 @@
         var longPressDelayInMs = parseInt(el.getAttribute('data-long-press-delay') || '1500', 10);
 
         // start the timer
-        timer = setTimeout(fireLongPressEvent.bind(el, e), longPressDelayInMs);
+        timer = requestTimeout(fireLongPressEvent.bind(el, e), longPressDelayInMs);
     }
 
     /**
@@ -86,20 +144,8 @@
      * @returns {void}
      */
     function clearLongPressTimer(e) {
-        clearTimeout(timer);
+        clearRequestTimeout(timer);
         timer = null;
-        if (e) log(e.type);
-    }
-
-    /**
-     * Writes values to the console if available
-     * @param {string} value - value to log
-     * @returns {void}
-     */
-    function log(value) {
-        // if (console && console.log) {
-        //     console.log('[long-press-event.js]', value);
-        // }
     }
 
     /**
@@ -119,14 +165,6 @@
     document.addEventListener(mouseMove, clearLongPressTimer, true);
     document.addEventListener('wheel', clearLongPressTimer, true);
     document.addEventListener('scroll', clearLongPressTimer, true);
-
-    // cancel context for touch display
-    if (mouseDown.indexOf('touch') === 0) {
-        document.addEventListener('contextmenu', cancelEvent, true);
-    }
-    else {
-        document.addEventListener('contextmenu', clearLongPressTimer, true);
-    }
 
     // hook events that can trigger a long press event
     document.addEventListener(mouseDown, startLongPressTimer, true); // <- start
