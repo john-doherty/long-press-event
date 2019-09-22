@@ -68,11 +68,11 @@ describe('long-press-mouse', function () {
 
     it('should fire long-press event using data-long-press-delay', function(done) {
 
-        var longPressDealy = 100;
+        var longPressDelay = 100;
 
         var el = document.createElement('div');
 
-        el.setAttribute('data-long-press-delay', longPressDealy);
+        el.setAttribute('data-long-press-delay', longPressDelay);
 
         document.body.appendChild(el);
 
@@ -86,7 +86,7 @@ describe('long-press-mouse', function () {
 
         setTimeout(function() {
             window.fireEvent(el, 'mouseup');
-        }, longPressDealy + 10);
+        }, longPressDelay + 10);
     });
 
     it('should fire with correct clientX and clientY', function(done) {
