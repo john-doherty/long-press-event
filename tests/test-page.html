@@ -6,7 +6,9 @@
         <script>
 
             // script to ease firing of test events
-            function fireEvent(el, eventName) {
+            function fireEvent(el, eventName, options) {
+
+                options = options || {};
 
                 if (document.createEvent) {
                     var e = null;
@@ -23,6 +25,12 @@
                     }
                     else {
                         e = document.createEvent('HTMLEvents');
+                        if (options.clientX) {
+                            e.clientX = options.clientX;
+                        }
+                        if (options.clientY) {
+                            e.clientY = options.clientY;
+                        }
                         e.initEvent(eventName, true, false);
                         el.dispatchEvent(e);
                     }

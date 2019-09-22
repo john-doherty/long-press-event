@@ -89,6 +89,29 @@ describe('long-press-mouse', function () {
         }, longPressDealy + 10);
     });
 
+    it('should fire with correct clientX and clientY', function(done) {
+
+        var clientX = 10,
+            clientY = 10;
+
+        var el = document.createElement('div');
+
+        document.body.appendChild(el);
+
+        el.addEventListener('long-press', function(e) {
+            expect(e).toBeDefined();
+            expect(e.detail.clientX).toEqual(clientX);
+            expect(e.detail.clientY).toEqual(clientY);
+            done();
+        });
+
+        window.fireEvent(el, 'mousedown', { clientX: clientX, clientY: clientY });
+
+        setTimeout(function() {
+            window.fireEvent(el, 'mouseup');
+        }, 1500);
+    });
+
 });
 
 describe('long-press-touch', function () {
