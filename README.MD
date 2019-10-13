@@ -8,8 +8,6 @@ Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay
 
 Try the [demo](https://jsfiddle.net/5xrtx69z/3/)
 
-**NOTE: Had to rename from `long-press` to `long-press-event` to publish on npm**
-
 ## Usage
 
 Add the [long-press-event.min.js](dist/long-press-event.min.js) file to your page and then listen for the event.

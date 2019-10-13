@@ -1,5 +1,5 @@
 /*!
- * long-press-event.js
+ * long-press-event - v@version@
  * Pure JavaScript long-press-event
  * https://github.com/john-doherty/long-press-event
  * @author John Doherty <www.johndoherty.info>
