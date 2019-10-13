@@ -6,7 +6,7 @@ A **1k** script that adds a `long-press` event to the DOM using [CustomEvent](ht
 
 Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay` attribute to an element.
 
-Try the [demo](https://jsfiddle.net/5xrtx69z/3/)
+Try the [demo](https://jsfiddle.net/kdfhz12y/)
 
 ## Usage
 
