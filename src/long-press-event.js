@@ -9,6 +9,7 @@
 
     'use strict';
 
+    // local timer object based on rAF
     var timer = null;
 
     // check if we're using a touch screen
@@ -16,9 +17,14 @@
 
     // switch to touch events if using a touch screen
     var mouseDown = isTouch ? 'touchstart' : 'mousedown';
-    var mouseOut = isTouch ? 'touchcancel' : 'mouseout';
     var mouseUp = isTouch ? 'touchend' : 'mouseup';
     var mouseMove = isTouch ? 'touchmove' : 'mousemove';
+
+    // track number of pixels the mouse moves during long press
+    var startX = 0; // mouse x position when timer started
+    var startY = 0; // mouse y position when timer started
+    var maxDiffX = 10; // max number of X pixels the mouse can move during long press before it is canceled
+    var maxDiffY = 10; // max number of Y pixels the mouse can move during long press before it is canceled
 
     // patch CustomEvent to allow constructor creation (IE/Chrome)
     if (typeof window.CustomEvent !== 'function') {
@@ -159,14 +165,41 @@
         e.stopPropagation();
     }
 
+    /**
+     * Starts the timer on mouse down and logs current position
+     * @param {object} e - browser event object
+     * @returns {void}
+     */
+    function mouseDownHandler(e) {
+        startX = e.clientX;
+        startY = e.clientY;
+        startLongPressTimer(e);
+    }
+
+    /**
+     * If the mouse moves n pixels during long-press, cancel the timer
+     * @param {object} e - browser event object
+     * @returns {void}
+     */
+    function mouseMoveHandler(e) {
+
+        // calculate total number of pixels the pointer has moved
+        var diffX = Math.abs(startX - e.clientX);
+        var diffY = Math.abs(startY - e.clientY);
+
+        // if pointer has moved more than allowed, cancel the long-press timer and therefore the event
+        if (diffX >= maxDiffX || diffY >= maxDiffY) {
+            clearLongPressTimer(e);
+        }
+    }
+
     // hook events that clear a pending long press event
-    document.addEventListener(mouseOut, clearLongPressTimer, true);
     document.addEventListener(mouseUp, clearLongPressTimer, true);
-    document.addEventListener(mouseMove, clearLongPressTimer, true);
+    document.addEventListener(mouseMove, mouseMoveHandler, true);
     document.addEventListener('wheel', clearLongPressTimer, true);
     document.addEventListener('scroll', clearLongPressTimer, true);
 
     // hook events that can trigger a long press event
-    document.addEventListener(mouseDown, startLongPressTimer, true); // <- start
+    document.addEventListener(mouseDown, mouseDownHandler, true); // <- start
 
 }(window, document));
