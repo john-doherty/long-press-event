@@ -70,7 +70,7 @@ The project includes everything needed to tweak, including a node webserver. Run
 _You can test on a desktop using [Device Mode](https://developers.google.com/web/tools/chrome-devtools/device-mode/) in Google Chrome._
 
 ```bash
-git clone https://github.com/john-doherty/long-press
+git clone https://github.com/john-doherty/long-press-event
 cd long-press
 npm install
 npm start
@@ -78,7 +78,7 @@ npm start
 
 ### Update .min files
 
-To create a new version of the minified [long-press.min.js](dist/long-press-event.min.js) file from source, tweak the version number in `package.json` and run the following:
+To create a new version of the minified [long-press-event.min.js](dist/long-press-event.min.js) file from source, tweak the version number in `package.json` and run the following:
 
 ```bash
 npm run build
