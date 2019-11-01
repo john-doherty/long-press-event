@@ -4,7 +4,7 @@
 
 A **1k** script that adds a `long-press` event to the DOM using [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) and pure JavaScript. Works in IE9+, Chrome, Firefox, Safari as well as popular mobile browsers including Cordova _(Phone Gap)_ applications.
 
-Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay` attribute to an element.
+Defaults to 1.5 seconds but can be overridden by adding a `data-long-press-delay` attribute to an element or event listener element.
 
 Try the [demo](https://jsfiddle.net/kdfhz12y/)
 
@@ -44,6 +44,8 @@ To set a custom delay and listen for a `long-press`:
     <head>
         <script src="long-press-event.js"></script>
         <script>
+            document['long-press-delay'] = 300
+
             document.addEventListener('long-press', function(e) {
                 console.log(e.target);
             });
