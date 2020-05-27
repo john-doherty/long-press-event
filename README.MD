@@ -1,6 +1,6 @@
 # long-press-event
 
-[![Shippable branch](https://img.shields.io/shippable/593aa7c6118f370700f9f244/master.svg)](https://app.shippable.com/projects/593aa7c6118f370700f9f244) [![npm](https://img.shields.io/npm/dt/long-press-event)](https://www.npmjs.com/package/long-press-event) [![Twitter Follow](https://img.shields.io/twitter/follow/mrjohndoherty?label=Follow%20Developer)](https://twitter.com/MrJohnDoherty)
+[![Shippable branch](https://img.shields.io/shippable/593aa7c6118f370700f9f244/master.svg)](https://app.shippable.com/projects/593aa7c6118f370700f9f244) [![npm](https://img.shields.io/npm/dt/long-press-event)](https://www.npmjs.com/package/long-press-event)
 
 A **1k** script that adds a `long-press` event to the DOM using [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) and pure JavaScript. Works in IE9+, Chrome, Firefox, Safari as well as popular mobile browsers including Cordova _(Phone Gap)_ applications.
 
@@ -94,4 +94,4 @@ For change-log, check [releases](https://github.com/john-doherty/long-press-even
 
 ## License
 
-Licensed under [MIT License](LICENSE) &copy; [John Doherty](http://www.johndoherty.info)
+Licensed under [MIT License](LICENSE) &copy; [John Doherty](https://twitter.com/mrjohndoherty)
