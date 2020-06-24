@@ -140,11 +140,17 @@
             screenY: isTouch ? originalEvent.touches[0].screenY : originalEvent.screenY,
         }));
 
-        if (suppressClickEvent) {
+        // FIXME: not the best idea to configure the behavior
+        if (window.longPressSuppressClickEvent) {
 
             // temporarily intercept and clear the next click
             document.addEventListener(mouseUp, function clearMouseUp(e) {
                 document.removeEventListener(mouseUp, clearMouseUp, true);
+                cancelEvent(e);
+            }, true);
+
+            document.addEventListener(mouseClick, function clearMouseClick(e) {
+                document.removeEventListener(mouseClick, clearMouseClick, true);
                 cancelEvent(e);
             }, true);
         }
