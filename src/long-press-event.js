@@ -13,12 +13,13 @@
     var timer = null;
 
     // check if we're using a touch screen
+    var hasPointerEvents = (('PointerEvent' in window) || (window.navigator && 'msPointerEnabled' in window.navigator));
     var isTouch = (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
 
-    // switch to touch events if using a touch screen
-    var mouseDown = isTouch ? 'touchstart' : 'mousedown';
-    var mouseUp = isTouch ? 'touchend' : 'mouseup';
-    var mouseMove = isTouch ? 'touchmove' : 'mousemove';
+    // switch to pointer events or touch events if using a touch screen
+    var mouseDown = hasPointerEvents ? 'pointerdown' : isTouch ? 'touchstart' : 'mousedown';
+    var mouseUp = hasPointerEvents ? 'pointerup' : isTouch ? 'touchend' : 'mouseup';
+    var mouseMove = hasPointerEvents ? 'pointermove' : isTouch ? 'touchmove' : 'mousemove';
 
     // track number of pixels the mouse moves during long press
     var startX = 0; // mouse x position when timer started
@@ -29,7 +30,7 @@
     // patch CustomEvent to allow constructor creation (IE/Chrome)
     if (typeof window.CustomEvent !== 'function') {
 
-        window.CustomEvent = function(event, params) {
+        window.CustomEvent = function (event, params) {
 
             params = params || { bubbles: false, cancelable: false, detail: undefined };
 
@@ -42,12 +43,12 @@
     }
 
     // requestAnimationFrame() shim by Paul Irish
-    window.requestAnimFrame = (function() {
+    window.requestAnimFrame = (function () {
         return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             window.oRequestAnimationFrame ||
-            window.msRequestAnimationFrame || function(callback) {
+            window.msRequestAnimationFrame || function (callback) {
                 window.setTimeout(callback, 1000 / 60);
             };
     })();
@@ -67,7 +68,7 @@
         var start = new Date().getTime();
         var handle = {};
 
-        var loop = function() {
+        var loop = function () {
             var current = new Date().getTime();
             var delta = current - start;
 
@@ -92,26 +93,27 @@
     function clearRequestTimeout(handle) {
         if (handle) {
             window.cancelAnimationFrame ? window.cancelAnimationFrame(handle.value) :
-            window.webkitCancelAnimationFrame ? window.webkitCancelAnimationFrame(handle.value) :
-            window.webkitCancelRequestAnimationFrame ? window.webkitCancelRequestAnimationFrame(handle.value) : /* Support for legacy API */
-            window.mozCancelRequestAnimationFrame ? window.mozCancelRequestAnimationFrame(handle.value) :
-            window.oCancelRequestAnimationFrame	? window.oCancelRequestAnimationFrame(handle.value) :
-            window.msCancelRequestAnimationFrame ? window.msCancelRequestAnimationFrame(handle.value) :
-            clearTimeout(handle);
+                window.webkitCancelAnimationFrame ? window.webkitCancelAnimationFrame(handle.value) :
+                    window.webkitCancelRequestAnimationFrame ? window.webkitCancelRequestAnimationFrame(handle.value) : /* Support for legacy API */
+                        window.mozCancelRequestAnimationFrame ? window.mozCancelRequestAnimationFrame(handle.value) :
+                            window.oCancelRequestAnimationFrame ? window.oCancelRequestAnimationFrame(handle.value) :
+                                window.msCancelRequestAnimationFrame ? window.msCancelRequestAnimationFrame(handle.value) :
+                                    clearTimeout(handle);
         }
     }
 
     /**
      * Fires the 'long-press' event on element
-     * @param {MouseEvent|TouchEvent} originalEvent The original event being fired
+     * @param {MouseEvent|PointerEvent|TouchEvent} originalEvent The original event being fired
      * @returns {void}
      */
     function fireLongPressEvent(originalEvent) {
 
         clearLongPressTimer();
+        var event = unifyEvent(originalEvent);
 
-        var clientX = isTouch ? originalEvent.touches[0].clientX : originalEvent.clientX,
-            clientY = isTouch ? originalEvent.touches[0].clientY : originalEvent.clientY;
+        var clientX = event.clientX,
+            clientY = event.clientY;
 
         // fire the long-press event
         var suppressClickEvent = this.dispatchEvent(new CustomEvent('long-press', { bubbles: true, cancelable: true, detail: { clientX: clientX, clientY: clientY } }));
@@ -124,6 +126,18 @@
                 cancelEvent(e);
             }, true);
         }
+    }
+
+    /**
+     * consolidates mouse, touch, and Pointer events
+     * @param {MouseEvent|PointerEvent|TouchEvent} e The original event being fired
+     * @returns {MouseEvent|PointerEvent|Touch}
+     */
+    function unifyEvent(e) {
+        if (e.changedTouches !== undefined)
+            return e.changedTouches[0];
+
+        return e;
     }
 
     /**
