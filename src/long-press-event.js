@@ -102,6 +102,20 @@
     }
 
     /**
+     * Gets event object regardless of touch or regular event
+     * @param {object} e - default browser event object
+     * @returns {object} regular event object
+     */
+    function normaliseEvent(e) {
+
+        if (isTouch && e.touches && e.touches[0]) {
+            return e.touches[0];
+        }
+
+        return e;
+    }
+
+    /**
      * Fires the 'long-press' event on element
      * @param {MouseEvent|TouchEvent} originalEvent The original event being fired
      * @returns {void}
@@ -110,11 +124,29 @@
 
         clearLongPressTimer();
 
-        var clientX = isTouch ? originalEvent.touches[0].clientX : originalEvent.clientX,
-            clientY = isTouch ? originalEvent.touches[0].clientY : originalEvent.clientY;
+        originalEvent = normaliseEvent(originalEvent);
 
         // fire the long-press event
-        var suppressClickEvent = this.dispatchEvent(new CustomEvent('long-press', { bubbles: true, cancelable: true, detail: { clientX: clientX, clientY: clientY } }));
+        var suppressClickEvent = this.dispatchEvent(new CustomEvent('long-press', {
+            bubbles: true,
+            cancelable: true,
+
+            // custom event data (legacy)
+            detail: {
+                clientX: originalEvent.clientX,
+                clientY: originalEvent.clientY
+            },
+
+            // add coordinate data that would typically acompany a touch/click event
+            clientX: originalEvent.clientX,
+            clientY: originalEvent.clientY,
+            offsetX: originalEvent.offsetX,
+            offsetY: originalEvent.offsetY,
+            pageX: originalEvent.pageX,
+            pageY: originalEvent.pageY,
+            screenX: originalEvent.screenX,
+            screenY: originalEvent.screenY
+        }));
 
         if (suppressClickEvent) {
 
