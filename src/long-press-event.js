@@ -126,8 +126,14 @@
 
         originalEvent = normaliseEvent(originalEvent);
 
+        // temporarily intercept next mouseup and clear to avoid click event firing
+        document.addEventListener('click', function suppressClickEvent(e) {
+            document.removeEventListener('click', suppressClickEvent, true);
+            cancelEvent(e);
+        }, true);
+
         // fire the long-press event
-        var suppressClickEvent = this.dispatchEvent(new CustomEvent('long-press', {
+        this.dispatchEvent(new CustomEvent('long-press', {
             bubbles: true,
             cancelable: true,
 
@@ -147,15 +153,6 @@
             screenX: originalEvent.screenX,
             screenY: originalEvent.screenY
         }));
-
-        if (suppressClickEvent) {
-
-            // temporarily intercept and clear the next click
-            document.addEventListener(mouseUp, function clearMouseUp(e) {
-                document.removeEventListener(mouseUp, clearMouseUp, true);
-                cancelEvent(e);
-            }, true);
-        }
     }
 
     /**
