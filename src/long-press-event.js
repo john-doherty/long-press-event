@@ -138,7 +138,7 @@
         var el = e.target;
 
         // get delay from html attribute if it exists, otherwise default to 1500
-        var longPressDelayInMs = parseInt(el.getAttribute('data-long-press-delay') || '1500', 10);
+        var longPressDelayInMs = parseInt(getNearestAttribute(el, 'data-long-press-delay', '1500'), 10); // default 1500
 
         // start the timer
         timer = requestTimeout(fireLongPressEvent.bind(el, e), longPressDelayInMs);
@@ -191,6 +191,30 @@
         if (diffX >= maxDiffX || diffY >= maxDiffY) {
             clearLongPressTimer(e);
         }
+    }
+
+    /**
+     * Gets attribute off HTML element or nearest parent
+     * @param {object} el - HTML element to retrieve attribute from
+     * @param {string} attributeName - name of the attribute
+     * @param {any} defaultValue - default value to return if no match found
+     * @returns {any} attribute value or defaultValue
+     */
+    function getNearestAttribute(el, attributeName, defaultValue) {
+
+        // walk up the dom tree looking for data-action and data-trigger
+        while (el && el !== document.documentElement) {
+
+            var attributeValue = el.getAttribute(attributeName);
+
+            if (attributeValue) {
+                return attributeValue;
+            }
+
+            el = el.parentNode;
+        }
+
+        return defaultValue;
     }
 
     // hook events that clear a pending long press event

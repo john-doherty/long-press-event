@@ -55,6 +55,15 @@ To set a custom delay and listen for a `long-press`:
 </html>
 ```
 
+To set a default application wide `data-long-press-delay`, set attribute on a parent/topmost element:
+
+```html
+<html data-long-press-delay="1500">
+    <head>...</head>
+    <body>...</body>
+</html>
+```
+
 ## Contributing
 
 1. Fork it!

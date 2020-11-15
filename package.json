@@ -1,6 +1,6 @@
 {
   "name": "long-press-event",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "A 1k script that adds a long-press event to the DOM using pure JS",
   "main": "dev-server.js",
   "scripts": {
