@@ -87,7 +87,7 @@ npm start
 
 ### Update .min files
 
-To create a new version of the minified [long-press-event.min.js](dist/long-press-event.min.js) file from source, tweak the version number in `package.json` and run the following:
+To create new [long-press-event.min.js](dist/long-press-event.min.js) file from source, tweak the version number in `package.json` and run the following:
 
 ```bash
 npm run build
