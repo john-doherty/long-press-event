@@ -95,7 +95,7 @@ npm run build
 
 ## Star the repo
 
-If you find this useful, please star the repo. It helps me priorities which open source projects issues I should resolve first.
+If you find this useful, please star the repo. It helps me prioritise which open source issues to tackle first.
 
 ## History
 
