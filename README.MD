@@ -55,6 +55,15 @@ To set a custom delay and listen for a `long-press`:
 </html>
 ```
 
+To set a default application wide `data-long-press-delay`, set attribute on a parent/topmost element:
+
+```html
+<html data-long-press-delay="1500">
+    <head>...</head>
+    <body>...</body>
+</html>
+```
+
 ## Contributing
 
 1. Fork it!
@@ -78,7 +87,7 @@ npm start
 
 ### Update .min files
 
-To create a new version of the minified [long-press-event.min.js](dist/long-press-event.min.js) file from source, tweak the version number in `package.json` and run the following:
+Update [long-press-event.min.js](dist/long-press-event.min.js) by tweaking the version number in `package.json` and running:
 
 ```bash
 npm run build
@@ -86,7 +95,7 @@ npm run build
 
 ## Star the repo
 
-If you find this useful, please star the repo. It helps me priorities which open source projects issues I should resolve first.
+If you find this useful, please star the repo. It helps me prioritise which open source issues to tackle first.
 
 ## History
 

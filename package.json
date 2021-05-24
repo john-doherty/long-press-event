@@ -1,8 +1,8 @@
 {
   "name": "long-press-event",
-  "version": "2.2.2",
+  "version": "2.4.3",
   "description": "A 1k script that adds a long-press event to the DOM using pure JS",
-  "main": "dev-server.js",
+  "main": "src/long-press-event.js",
   "scripts": {
     "start": "node server/dev-server.js",
     "test": "jasmine-node tests --verbose --color --forceexit --junitreport || true",
@@ -32,14 +32,14 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.2.0",
     "express": "4.15.3",
-    "gulp": "3.9.1",
-    "gulp-minify": "1.0.0",
+    "gulp": "^4.0.2",
+    "gulp-minify": "^3.1.0",
     "gulp-sizereport": "^1.2.0",
-    "gulp-string-replace": "^0.4.0",
+    "gulp-string-replace": "^1.1.2",
+    "gulp4-run-sequence": "^1.0.1",
     "jasmine-node": "1.14.5",
     "jsdom": "10.1.0",
-    "nock": "9.0.13",
-    "run-sequence": "1.2.2"
+    "nock": "9.0.13"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
@@ -152,5 +152,6 @@
         "error"
       ]
     }
-  }
+  },
+  "dependencies": {}
 }

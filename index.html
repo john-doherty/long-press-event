@@ -38,8 +38,15 @@
             window.onload = function() {
 
                 document.addEventListener('long-press', function(e) {
+
+                    e.preventDefault();
+
                     e.target.setAttribute('data-editing', 'true');
                 });
+
+                document.addEventListener('click', function(e) {
+                    console.log(e.type);
+                })
             }
         </script>
     </head>

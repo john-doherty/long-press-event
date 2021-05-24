@@ -110,19 +110,35 @@
     function fireLongPressEvent(originalEvent) {
 
         clearLongPressTimer();
-        var event = unifyEvent(originalEvent);
 
-        var clientX = event.clientX,
-            clientY = event.clientY;
+        originalEvent = unifyEvent(originalEvent);
 
         // fire the long-press event
-        var suppressClickEvent = this.dispatchEvent(new CustomEvent('long-press', { bubbles: true, cancelable: true, detail: { clientX: clientX, clientY: clientY } }));
+        var allowClickEvent = this.dispatchEvent(new CustomEvent('long-press', {
+            bubbles: true,
+            cancelable: true,
 
-        if (suppressClickEvent) {
+            // custom event data (legacy)
+            detail: {
+                clientX: originalEvent.clientX,
+                clientY: originalEvent.clientY
+            },
 
-            // temporarily intercept and clear the next click
-            document.addEventListener(mouseUp, function clearMouseUp(e) {
-                document.removeEventListener(mouseUp, clearMouseUp, true);
+            // add coordinate data that would typically acompany a touch/click event
+            clientX: originalEvent.clientX,
+            clientY: originalEvent.clientY,
+            offsetX: originalEvent.offsetX,
+            offsetY: originalEvent.offsetY,
+            pageX: originalEvent.pageX,
+            pageY: originalEvent.pageY,
+            screenX: originalEvent.screenX,
+            screenY: originalEvent.screenY
+        }));
+
+        if (!allowClickEvent) {
+            // suppress the next click event if e.preventDefault() was called in long-press handler
+            document.addEventListener('click', function suppressEvent(e) {
+                document.removeEventListener('click', suppressEvent, true);
                 cancelEvent(e);
             }, true);
         }
@@ -134,9 +150,9 @@
      * @returns {MouseEvent|PointerEvent|Touch}
      */
     function unifyEvent(e) {
-        if (e.changedTouches !== undefined)
+        if (e.changedTouches !== undefined) {
             return e.changedTouches[0];
-
+        }
         return e;
     }
 
@@ -152,7 +168,7 @@
         var el = e.target;
 
         // get delay from html attribute if it exists, otherwise default to 1500
-        var longPressDelayInMs = parseInt(el.getAttribute('data-long-press-delay') || '1500', 10);
+        var longPressDelayInMs = parseInt(getNearestAttribute(el, 'data-long-press-delay', '1500'), 10); // default 1500
 
         // start the timer
         timer = requestTimeout(fireLongPressEvent.bind(el, e), longPressDelayInMs);
@@ -205,6 +221,30 @@
         if (diffX >= maxDiffX || diffY >= maxDiffY) {
             clearLongPressTimer(e);
         }
+    }
+
+    /**
+     * Gets attribute off HTML element or nearest parent
+     * @param {object} el - HTML element to retrieve attribute from
+     * @param {string} attributeName - name of the attribute
+     * @param {any} defaultValue - default value to return if no match found
+     * @returns {any} attribute value or defaultValue
+     */
+    function getNearestAttribute(el, attributeName, defaultValue) {
+
+        // walk up the dom tree looking for data-action and data-trigger
+        while (el && el !== document.documentElement) {
+
+            var attributeValue = el.getAttribute(attributeName);
+
+            if (attributeValue) {
+                return attributeValue;
+            }
+
+            el = el.parentNode;
+        }
+
+        return defaultValue;
     }
 
     // hook events that clear a pending long press event

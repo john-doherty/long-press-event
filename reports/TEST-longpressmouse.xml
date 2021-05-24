@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="long-press-mouse" errors="0" tests="3" failures="0" time="3.993" timestamp="2020-11-15T21:16:36">
+  <testcase classname="long-press-mouse" name="should fire long-press event after default 1.5s" time="1.852"></testcase>
+  <testcase classname="long-press-mouse" name="should fire long-press event using data-long-press-delay" time="0.378"></testcase>
+  <testcase classname="long-press-mouse" name="should fire with correct clientX and clientY" time="1.763"></testcase>
+</testsuite>
+</testsuites>
