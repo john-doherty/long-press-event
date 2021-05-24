@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="long-press-pointer" errors="0" tests="3" failures="0" time="3.925" timestamp="2021-05-24T21:01:19">
+  <testcase classname="long-press-pointer" name="should fire long-press event after default 1.5s" time="1.775"></testcase>
+  <testcase classname="long-press-pointer" name="should fire long-press event using data-long-press-delay" time="0.374"></testcase>
+  <testcase classname="long-press-pointer" name="should fire with correct clientX and clientY" time="1.776"></testcase>
+</testsuite>
+</testsuites>
