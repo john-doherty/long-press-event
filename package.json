@@ -2,7 +2,7 @@
   "name": "long-press-event",
   "version": "2.4.2",
   "description": "A 1k script that adds a long-press event to the DOM using pure JS",
-  "main": "dev-server.js",
+  "main": "src/long-press-event.js",
   "scripts": {
     "start": "node server/dev-server.js",
     "test": "jasmine-node tests --verbose --color --forceexit --junitreport || true",
