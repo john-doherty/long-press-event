@@ -37,7 +37,7 @@
     "gulp-sizereport": "^1.2.0",
     "gulp-string-replace": "^1.1.2",
     "gulp4-run-sequence": "^1.0.1",
-    "jasmine-node": "1.14.5",
+    "jasmine-node": "1.16.2",
     "jsdom": "10.1.0",
     "nock": "9.0.13"
   },
