@@ -123,10 +123,10 @@
             detail: {
                 clientX: originalEvent.clientX,
                 clientY: originalEvent.clientY,
-				offsetX: originalEvent.offsetX,
-				offsetY: originalEvent.offsetY,
-				pageX: originalEvent.pageX,
-				pageY: originalEvent.pageY
+                offsetX: originalEvent.offsetX,
+                offsetY: originalEvent.offsetY,
+                pageX: originalEvent.pageX,
+                pageY: originalEvent.pageY
             },
 
             // add coordinate data that would typically acompany a touch/click event
