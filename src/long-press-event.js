@@ -303,7 +303,6 @@
 
     // hook events that clear a pending long press event
     document.addEventListener(mouseUp, clearLongPressTimer, true);
-    document.addEventListener(mouseLeave, clearLongPressTimer, true);
     document.addEventListener(mouseMove, mouseMoveHandler, true);
     document.addEventListener('wheel', clearLongPressTimer, true);
     document.addEventListener('scroll', clearLongPressTimer, true);
