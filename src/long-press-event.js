@@ -129,7 +129,7 @@
                 pageY: originalEvent.pageY
             },
 
-            // add coordinate data that would typically acompany a touch/click event
+            // add coordinate and pointer data that would typically acompany a touch/click event
             clientX: originalEvent.clientX,
             clientY: originalEvent.clientY,
             offsetX: originalEvent.offsetX,
@@ -137,7 +137,12 @@
             pageX: originalEvent.pageX,
             pageY: originalEvent.pageY,
             screenX: originalEvent.screenX,
-            screenY: originalEvent.screenY
+            screenY: originalEvent.screenY,
+            button: originalEvent.button,
+            buttons: originalEvent.buttons,
+            isPrimary: originalEvent.isPrimary,
+            pointerId: originalEvent.pointerId,
+            pointerType: originalEvent.pointerType
         }));
 
         if (!allowClickEvent) {
