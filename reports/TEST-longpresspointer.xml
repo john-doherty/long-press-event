@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="long-press-pointer" errors="0" tests="3" failures="0" time="3.925" timestamp="2021-05-24T21:01:19">
-  <testcase classname="long-press-pointer" name="should fire long-press event after default 1.5s" time="1.775"></testcase>
-  <testcase classname="long-press-pointer" name="should fire long-press event using data-long-press-delay" time="0.374"></testcase>
-  <testcase classname="long-press-pointer" name="should fire with correct clientX and clientY" time="1.776"></testcase>
+<testsuite name="long-press-pointer" errors="0" tests="3" failures="0" time="3.938" timestamp="2024-04-27T20:15:36">
+  <testcase classname="long-press-pointer" name="should fire long-press event after default 1.5s" time="1.778"></testcase>
+  <testcase classname="long-press-pointer" name="should fire long-press event using data-long-press-delay" time="0.382"></testcase>
+  <testcase classname="long-press-pointer" name="should fire with correct clientX and clientY" time="1.778"></testcase>
 </testsuite>
 </testsuites>
