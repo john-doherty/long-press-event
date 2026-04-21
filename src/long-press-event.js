@@ -258,7 +258,17 @@
     document.addEventListener(mouseMove, mouseMoveHandler, true);
     document.addEventListener('wheel', clearLongPressTimer, true);
     document.addEventListener('scroll', clearLongPressTimer, true);
-    document.addEventListener('contextmenu', clearLongPressTimer, true);
+    document.addEventListener('contextmenu', function(e) {
+
+        // on touch devices, prevent the native context menu and keep the long-press timer running
+        if (isTouch) { 
+            e.preventDefault();
+            return;
+        }
+
+        // on non-touch devices, clear timer
+        clearLongPressTimer();
+    }, true);
 
     // hook events that can trigger a long press event
     document.addEventListener(mouseDown, mouseDownHandler, true); // <- start
