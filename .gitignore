@@ -2,3 +2,4 @@ node_modules
 reports
 reports/TEST-longpressmouse.xml
 reports/TEST-longpresspointer.xml
+/reports
