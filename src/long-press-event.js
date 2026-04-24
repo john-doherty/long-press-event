@@ -27,6 +27,8 @@
     var startY = 0; // mouse y position when timer started
     var maxDiffX = 10; // max number of X pixels the mouse can move during long press before it is canceled
     var maxDiffY = 10; // max number of Y pixels the mouse can move during long press before it is canceled
+    
+    var longPressedEl = null;
 
     // patch CustomEvent to allow constructor creation (IE/Chrome)
     if (typeof window.CustomEvent !== 'function') {
@@ -112,6 +114,7 @@
 
         clearLongPressTimer();
 
+        longPressedEl = this;
         originalEvent = unifyEvent(originalEvent);
 
         // fire the long-press event
@@ -142,11 +145,51 @@
 
         if (!allowClickEvent) {
             // suppress the next click event if e.preventDefault() was called in long-press handler
-            document.addEventListener('click', function suppressEvent(e) {
-                document.removeEventListener('click', suppressEvent, true);
+            var suppressClickEvent = function suppressCLickEvent(e) {
+                document.removeEventListener('click', suppressClickEvent, true);
                 cancelEvent(e);
+            }; 
+            document.addEventListener('click', suppressClickEvent, true);
+            document.addEventListener(mouseDown, function suppressEvents(e) {
+                document.removeEventListener(mouseDown, suppressEvents, true);
+                document.removeEventListener('click', suppressClickEvent, true);
             }, true);
         }
+        this.addEventListener(mouseLeave, clearLongPressTimer, true);
+    }
+
+    /**
+     * Fires the 'long-press-end' event on element
+     * @param {MouseEvent|PointerEvent|TouchEvent} originalEvent The original event being fired
+     * @returns {void}
+     */
+    function fireLongPressEndEvent(originalEvent) {
+
+        //longPressedEl.removeEventListener(mouseLeave, clearLongPressTimer, true);
+        longPressedEl = null;
+        originalEvent = unifyEvent(originalEvent);
+
+        // fire the long-press event
+        this.dispatchEvent(new CustomEvent('long-press-end', {
+            bubbles: true,
+            cancelable: true,
+
+            // custom event data (legacy)
+            detail: {
+                clientX: originalEvent.clientX,
+                clientY: originalEvent.clientY
+            },
+
+            // add coordinate data that would typically acompany a touch/click event
+            clientX: originalEvent.clientX,
+            clientY: originalEvent.clientY,
+            offsetX: originalEvent.offsetX,
+            offsetY: originalEvent.offsetY,
+            pageX: originalEvent.pageX,
+            pageY: originalEvent.pageY,
+            screenX: originalEvent.screenX,
+            screenY: originalEvent.screenY
+        }));
     }
 
     /**
@@ -185,6 +228,12 @@
      * @returns {void}
      */
     function clearLongPressTimer(e) {
+        if (longPressedEl !== null) {
+            longPressedEl.removeEventListener(mouseLeave, clearLongPressTimer, true);
+            var fn = fireLongPressEndEvent.bind(longPressedEl, e);
+            fn();
+        }
+        longPressedEl = null;
         clearRequestTimeout(timer);
         timer = null;
     }
@@ -254,7 +303,6 @@
 
     // hook events that clear a pending long press event
     document.addEventListener(mouseUp, clearLongPressTimer, true);
-    document.addEventListener(mouseLeave, clearLongPressTimer, true);
     document.addEventListener(mouseMove, mouseMoveHandler, true);
     document.addEventListener('wheel', clearLongPressTimer, true);
     document.addEventListener('scroll', clearLongPressTimer, true);
