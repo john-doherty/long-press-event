@@ -61,7 +61,8 @@ describe('long-press-mouse', function () {
         window.fireEvent(el, 'mousedown');
 
         setTimeout(function () {
-            window.fireEvent(el, 'mouseup');
+            // the test can finish before this runs, and the next one replaces window
+            el.ownerDocument.defaultView.fireEvent(el, 'mouseup');
         }, 1500);
     });
 
@@ -85,7 +86,8 @@ describe('long-press-mouse', function () {
         window.fireEvent(el, 'mousedown');
 
         setTimeout(function () {
-            window.fireEvent(el, 'mouseup');
+            // the test can finish before this runs, and the next one replaces window
+            el.ownerDocument.defaultView.fireEvent(el, 'mouseup');
         }, longPressDelay + 10);
     });
 
@@ -108,7 +110,8 @@ describe('long-press-mouse', function () {
         window.fireEvent(el, 'mousedown', { clientX: clientX, clientY: clientY });
 
         setTimeout(function () {
-            window.fireEvent(el, 'mouseup');
+            // the test can finish before this runs, and the next one replaces window
+            el.ownerDocument.defaultView.fireEvent(el, 'mouseup');
         }, 1500);
     });
 
