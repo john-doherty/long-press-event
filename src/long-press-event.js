@@ -12,6 +12,9 @@
     // local timer object based on rAF
     var timer = null;
 
+    // the press the timer is waiting on: when it started by the event's own clock, how long it has to be held, and how to fire it
+    var pendingPress = null;
+
     // check if we're using a touch screen
     var hasPointerEvents = (('PointerEvent' in window) || (window.navigator && 'msPointerEnabled' in window.navigator));
     var isTouch = (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
@@ -175,8 +178,14 @@
         // get delay from html attribute if it exists, otherwise default to 1500
         var longPressDelayInMs = parseInt(getNearestAttribute(el, 'data-long-press-delay', '1500'), 10); // default 1500
 
+        pendingPress = {
+            startTimeStamp: e.timeStamp,
+            delay: longPressDelayInMs,
+            fire: fireLongPressEvent.bind(el, e)
+        };
+
         // start the timer
-        timer = requestTimeout(fireLongPressEvent.bind(el, e), longPressDelayInMs);
+        timer = requestTimeout(pendingPress.fire, longPressDelayInMs);
     }
 
     /**
@@ -187,6 +196,23 @@
     function clearLongPressTimer(e) {
         clearRequestTimeout(timer);
         timer = null;
+        pendingPress = null;
+    }
+
+    /**
+     * Fires the pending long-press if the pointer was held for the delay, otherwise cancels it.
+     * The timer can miss such a press: it starts when the mousedown handler runs, which on a busy page is well after
+     * the press began, and it only checks once per animation frame. The events' own timestamps say how long it was held.
+     * @param {object} e - browser event object
+     * @returns {void}
+     */
+    function mouseUpHandler(e) {
+        if (pendingPress && e.timeStamp - pendingPress.startTimeStamp >= pendingPress.delay) {
+            pendingPress.fire();
+            return;
+        }
+
+        clearLongPressTimer(e);
     }
 
     /**
@@ -253,7 +279,7 @@
     }
 
     // hook events that clear a pending long press event
-    document.addEventListener(mouseUp, clearLongPressTimer, true);
+    document.addEventListener(mouseUp, mouseUpHandler, true);
     document.addEventListener(mouseLeave, clearLongPressTimer, true);
     document.addEventListener(mouseMove, mouseMoveHandler, true);
     document.addEventListener('wheel', clearLongPressTimer, true);
