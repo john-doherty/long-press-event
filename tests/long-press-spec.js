@@ -222,7 +222,107 @@ describe('long-press-pointer', function () {
             el.dispatchEvent(new window.Event('pointerup'));
         }, 1500);
     });
+
+    it('should fire long-press on release when held past the delay before the timer ran', function () {
+        var longPressDelay = 100;
+        var longPressCount = 0;
+
+        var el = document.createElement('div');
+        el.setAttribute('data-long-press-delay', longPressDelay);
+        document.body.appendChild(el);
+        el.addEventListener('long-press', function () {
+            longPressCount++;
+        });
+
+        el.dispatchEvent(new window.Event('pointerdown'));
+
+        // a busy page: the timer gets no chance to run before the pointer is released
+        blockFor(longPressDelay + 20);
+        el.dispatchEvent(new window.Event('pointerup'));
+
+        expect(longPressCount).toBe(1);
+    });
+
+    it('should not fire long-press when released before the delay', function (done) {
+        var longPressDelay = 100;
+        var longPressCount = 0;
+
+        var el = document.createElement('div');
+        el.setAttribute('data-long-press-delay', longPressDelay);
+        document.body.appendChild(el);
+        el.addEventListener('long-press', function () {
+            longPressCount++;
+        });
+
+        el.dispatchEvent(new window.Event('pointerdown'));
+
+        setTimeout(function () {
+            el.dispatchEvent(new window.Event('pointerup'));
+        }, longPressDelay / 2);
+
+        setTimeout(function () {
+            expect(longPressCount).toBe(0);
+            done();
+        }, longPressDelay * 2);
+    });
+
+    it('should not fire long-press on release when the pointer moved away first', function () {
+        var longPressDelay = 100;
+        var longPressCount = 0;
+
+        var el = document.createElement('div');
+        el.setAttribute('data-long-press-delay', longPressDelay);
+        document.body.appendChild(el);
+        el.addEventListener('long-press', function () {
+            longPressCount++;
+        });
+
+        var down = new window.Event('pointerdown');
+        Object.assign(down, { clientX: 10, clientY: 10 });
+        el.dispatchEvent(down);
+
+        var move = new window.Event('pointermove');
+        Object.assign(move, { clientX: 40, clientY: 10 });
+        el.dispatchEvent(move);
+
+        blockFor(longPressDelay + 20);
+        el.dispatchEvent(new window.Event('pointerup'));
+
+        expect(longPressCount).toBe(0);
+    });
+
+    it('should fire long-press once when the timer fired before the release', function (done) {
+        var longPressDelay = 100;
+        var longPressCount = 0;
+
+        var el = document.createElement('div');
+        el.setAttribute('data-long-press-delay', longPressDelay);
+        document.body.appendChild(el);
+        el.addEventListener('long-press', function () {
+            longPressCount++;
+        });
+
+        el.dispatchEvent(new window.Event('pointerdown'));
+
+        setTimeout(function () {
+            el.dispatchEvent(new window.Event('pointerup'));
+            expect(longPressCount).toBe(1);
+            done();
+        }, longPressDelay * 2);
+    });
 });
+
+/**
+ * Keeps the thread busy, the way a long render does, so no timer can run meanwhile
+ * @param {int} ms - how long to block for
+ * @returns {void}
+ */
+function blockFor(ms) {
+    var end = Date.now() + ms;
+    while (Date.now() < end) {
+        // busy wait
+    }
+}
 
 // describe('long-press-touch', function () {
 
