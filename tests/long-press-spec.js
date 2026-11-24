@@ -243,8 +243,30 @@ describe('long-press-pointer', function () {
         expect(longPressCount).toBe(1);
     });
 
-    it('should not fire long-press when released before the delay', function (done) {
+    it('should swallow the next click when a long-press fired on release is prevented', function () {
         var longPressDelay = 100;
+        var clickCount = 0;
+
+        var el = document.createElement('div');
+        el.setAttribute('data-long-press-delay', longPressDelay);
+        document.body.appendChild(el);
+        el.addEventListener('long-press', function (e) {
+            e.preventDefault();
+        });
+        el.addEventListener('click', function () {
+            clickCount++;
+        });
+
+        el.dispatchEvent(new window.Event('pointerdown'));
+        blockFor(longPressDelay + 20);
+        el.dispatchEvent(new window.Event('pointerup'));
+        el.dispatchEvent(new window.Event('click', { bubbles: true }));
+
+        expect(clickCount).toBe(0);
+    });
+
+    it('should not fire long-press when released before the delay', function (done) {
+        var longPressDelay = 200;
         var longPressCount = 0;
 
         var el = document.createElement('div');
@@ -258,7 +280,7 @@ describe('long-press-pointer', function () {
 
         setTimeout(function () {
             el.dispatchEvent(new window.Event('pointerup'));
-        }, longPressDelay / 2);
+        }, longPressDelay / 4);
 
         setTimeout(function () {
             expect(longPressCount).toBe(0);
@@ -291,7 +313,7 @@ describe('long-press-pointer', function () {
         expect(longPressCount).toBe(0);
     });
 
-    it('should fire long-press once when the timer fired before the release', function (done) {
+    it('should fire long-press during the hold and not again on release', function (done) {
         var longPressDelay = 100;
         var longPressCount = 0;
 
@@ -305,6 +327,9 @@ describe('long-press-pointer', function () {
         el.dispatchEvent(new window.Event('pointerdown'));
 
         setTimeout(function () {
+            // still held: only the timer can have fired it
+            expect(longPressCount).toBe(1);
+
             el.dispatchEvent(new window.Event('pointerup'));
             expect(longPressCount).toBe(1);
             done();
